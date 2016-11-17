@@ -4,10 +4,28 @@ import java.util.Arrays;
 
 import models.Graph;
 
-public abstract class FloydWarshall {
+/**
+ * Class with single method that implements the FloydWarshall algorithm to
+ * calculate the all paths shortest path.
+ */
+public final class FloydWarshall {
 
+  /**
+   * Private constructor so the class can't be instantiated.
+   */
+  private FloydWarshall() {
+  }
+
+  /**
+   * Calculates all pair shortest path for the given graph.
+   *
+   * @param g
+   *          The graph to calculate
+   * @return A matrix with the calculated distances between each vertex
+   */
   public static double[][] calculate(Graph g) {
     final double[][] distances;
+    // Initially the result is the adjacency matrix
     distances = Arrays.copyOf(g.getAdjacencyMatrix(), g.getSize());
 
     for (int k = 0; k < g.getSize(); k++) {
