@@ -23,7 +23,7 @@ public abstract class ClosenessCentrality {
       for (int j = 0; j < distances.length; j++) {
         sum += distances[i][j];
       }
-      result[i] = g.getSize() / sum;
+      result[i] = (g.getSize() - 1) / sum;
     }
     return result;
   }
