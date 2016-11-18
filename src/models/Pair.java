@@ -28,7 +28,6 @@ public class Pair implements Comparable<Pair> {
     this.value = value;
   }
 
-  @Override
   public int compareTo(Pair other) {
     return Double.valueOf(this.value).compareTo(other.value);
   }

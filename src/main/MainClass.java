@@ -12,7 +12,7 @@ public class MainClass {
 
   public static void main(String[] args) {
 
-    // TODO dinamically get the number of vertexes
+    // TODO dynamically get the number of vertexes
     final Graph g = new Graph(100, false);
 
     final Scanner scanner = new Scanner(System.in);
