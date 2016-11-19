@@ -1,5 +1,8 @@
 package main;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -11,45 +14,56 @@ import com.restfb.types.User;
 
 import algorithm.ClosenessCentrality;
 import models.FacebookGraph;
+import models.Graph;
 import models.NamePair;
+import models.Pair;
 
+/**
+ * Class the hold the main method to execute both parts of the challenge.
+ */
 public class MainClass {
 
-  public static void main(String[] args) {
-
+  /**
+   * Executes part1 of the challenge, calculating the closeness centrality of a
+   * graph.
+   *
+   * @param path
+   *          The path to the file that represents the graph
+   * @throws IOException
+   *           In case of error reading the file
+   */
+  private static void part1(String path) throws IOException {
     // TODO dynamically get the number of vertexes
-    // final Graph g = new Graph(100, false);
-    //
-    // final Scanner scanner = new Scanner(System.in);
-    //
-    // // Reads until EOF or invalid token
-    // while (scanner.hasNextInt()) {
-    // int from = scanner.nextInt();
-    // int to = scanner.nextInt();
-    //
-    // g.addEdge(from, to, 1);
-    // }
-    //
-    // scanner.close();
-    // // Executes the closeness centrality algorithm
-    // Double[] result = ClosenessCentrality.calculate(g);
-    //
-    // // Builds pairs from the results, where index is the vertex number and
-    // the
-    // // value is the closeness of that vertex
-    // Pair[] pairs = new Pair[g.getSize()];
-    //
-    // for (int i = 0; i < g.getSize(); i++) {
-    // pairs[i] = new Pair(i, result[i]);
-    // }
-    //
-    // // Sort the pairs and print out both the vertex and its closeness
-    // Arrays.sort(pairs, Collections.reverseOrder());
-    // for (int i = 0; i < g.getSize(); i++) {
-    // System.out.format("%d %.10f\n", pairs[i].getIndex(),
-    // pairs[i].getValue());
-    // }
+    final Graph g = new Graph(100, false);
 
+    Files.lines(Paths.get(path)).forEach(s -> {
+      String[] tokens = s.split(" ");
+      g.addEdge(Integer.valueOf(tokens[0]), Integer.valueOf(tokens[1]), 1);
+    });
+
+    // Executes the closeness centrality algorithm
+    Double[] result = ClosenessCentrality.calculate(g);
+
+    // Builds pairs from the results, where index is the vertex number and the
+    // value is the closeness of that vertex
+    Pair[] pairs = new Pair[g.getSize()];
+
+    for (int i = 0; i < g.getSize(); i++) {
+      pairs[i] = new Pair(i, result[i]);
+    }
+
+    // Sort the pairs and print out both the vertex and its closeness
+    Arrays.sort(pairs, Collections.reverseOrder());
+    for (int i = 0; i < g.getSize(); i++) {
+      System.out.format("%d %.10f\n", pairs[i].getIndex(), pairs[i].getValue());
+    }
+  }
+
+  /**
+   * Executes part2 of the challenge, calculating the closeness centrality for a
+   * group of friends on facebook.
+   */
+  private static void part2() {
     // Access tokens for the tests users created
     String[] TOKENS = {
         "EAAXBMhNn08EBAKWDhzqbroHfZBfMU2Va7Pw1HIR0ay09JJZBllUCE8OrZAGLrZCsKKzGTkvW6bJBZAc2UgiOosmXyiqt72O2QSy5ChoEXJATZA62fZCzSupUbsHygbS8aiF9frlL6TsGFjT0dyZAz91yJlth9mgVHwdWpQqskP6Jg9ZAB5OrZAKFra",
@@ -93,5 +107,18 @@ public class MainClass {
       System.out.print(pairs[i].getName() + "\t\t");
       System.out.println(pairs[i].getValue());
     }
+  }
+
+  /**
+   * Main method to execute both parts of the challenge
+   *
+   * @param args
+   *          Should contain the path to the file that represents the graph
+   * @throws IOException
+   *           In caso of error reading the file, stops execution
+   */
+  public static void main(String[] args) throws IOException {
+    MainClass.part1(args[0]);
+    MainClass.part2();
   }
 }
