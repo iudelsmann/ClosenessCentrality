@@ -6,7 +6,13 @@ import models.Graph;
  * Class that implements an algorithm to calculate the closeness centrality of
  * all vertex of a given graph
  */
-public abstract class ClosenessCentrality {
+public final class ClosenessCentrality {
+
+  /**
+   * Private constructor so the class can't be instantiated.
+   */
+  private ClosenessCentrality() {
+  }
 
   /**
    * Calculates the closeness centrality of the given graph.

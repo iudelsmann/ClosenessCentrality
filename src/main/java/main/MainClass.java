@@ -118,7 +118,12 @@ public class MainClass {
    *           In caso of error reading the file, stops execution
    */
   public static void main(String[] args) throws IOException {
-    MainClass.part1(args[0]);
-    MainClass.part2();
+    if (args[0].equals("1")) {
+      MainClass.part1(args[1]);
+    } else if (args[0].equals("2")) {
+      MainClass.part2();
+    } else {
+      System.out.println("Invalid option, choose either 1 or 2");
+    }
   }
 }
